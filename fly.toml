@@ -1,4 +1,4 @@
-app = 'fullstackopen-pokedex'
+app = 'nerovkha-check-ci-cd'
 primary_region = 'ams'
 
 [build]
