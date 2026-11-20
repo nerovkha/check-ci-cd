@@ -13,3 +13,9 @@ Start by running `npm install` inside the project folder
 `npm run eslint` to run eslint
 `npm run build` to make a production build
 `npm run start-prod` to run your production build
+
+## Links
+
+Deployed version of the app: https://nerovkha-check-ci-cd.fly.dev
+
+Pokedex exercise repository: https://github.com/nerovkha/part-11
