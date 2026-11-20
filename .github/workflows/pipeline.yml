@@ -37,22 +37,24 @@ jobs:
       - name: Build
         run: npm run build
       - name: Run e2e tests
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           start: npm run start-prod
-          wait-on: http://localhost:5000
+          wait-on: http://127.0.0.1:5000
   deploy:
     needs: [simple_deployment_pipeline, e2e_tests]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && secrets.FLY_API_TOKEN != ''
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-24.04
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy to Fly.io
+        if: env.FLY_API_TOKEN != ''
         run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       - name: Health check
+        if: env.FLY_API_TOKEN != ''
         run: |
           sleep 10
-          curl --fail https://fullstackopen-pokedex.fly.dev/health
+          curl --fail https://nerovkha-check-ci-cd.fly.dev/health
